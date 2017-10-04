@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://ssbd.qbic.riken.jp/bdml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://ssbd.qbic.riken.jp/bdml" elementFormDefault="qualified">
+	<xsd:annotation>
+		<xsd:documentation> Filename: bdml.xsd * Description: XML Schema for BDML version 3.0.
+			Author(s): Koji Kyoda, Yukako Tohsato, Kenneth H. L. Ho, Shuichi Onami
+		</xsd:documentation>
+	</xsd:annotation>
+	<!-- The definition of UnitKind follows. -->
+	<xsd:simpleType name="UnitKind">
+		<xsd:annotation>
+			<xsd:documentation>UnitKind represents unit of numerical value in the data.
+			It is based on the definition of the SBML schema (Hucka et al., 2003).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ampere" />
+			<xsd:enumeration value="a.u." />
+			<xsd:enumeration value="becquerel" />
+			<xsd:enumeration value="candela" />
+			<xsd:enumeration value="Celsius" />
+			<xsd:enumeration value="coulomb" />
+			<xsd:enumeration value="dimensionless" />
+			<xsd:enumeration value="farad" />
+			<xsd:enumeration value="gram" />
+			<xsd:enumeration value="gray" />
+			<xsd:enumeration value="henry" />
+			<xsd:enumeration value="hertz" />
+			<xsd:enumeration value="item" />
+			<xsd:enumeration value="joule" />
+			<xsd:enumeration value="katal" />
+			<xsd:enumeration value="kelvin" />
+			<xsd:enumeration value="kilogram" />
+			<xsd:enumeration value="liter" />
+			<xsd:enumeration value="litre" />
+			<xsd:enumeration value="lumen" />
+			<xsd:enumeration value="lux" />
+			<xsd:enumeration value="meter" />
+			<xsd:enumeration value="metre" />
+			<xsd:enumeration value="micrometer" />
+			<xsd:enumeration value="micrometre" />
+			<xsd:enumeration value="mole" />
+			<xsd:enumeration value="newton" />
+			<xsd:enumeration value="ohm" />
+			<xsd:enumeration value="pascal" />
+			<xsd:enumeration value="p.d.u." />
+			<xsd:enumeration value="radian" />
+			<xsd:enumeration value="siemens" />
+			<xsd:enumeration value="sievert" />
+			<xsd:enumeration value="steradian" />
+			<xsd:enumeration value="tesla" />
+			<xsd:enumeration value="volt" />
+			<xsd:enumeration value="watt" />
+			<xsd:enumeration value="weber" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- The definition of tUnitKind follows. -->
+	<xsd:simpleType name="tUnitKind">
+		<xsd:annotation>
+			<xsd:documentation>tUnitKind represents unit of time.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="nanosecond" />
+			<xsd:enumeration value="microsecond" />
+			<xsd:enumeration value="millisecond" />
+			<xsd:enumeration value="second" />
+			<xsd:enumeration value="minute" />
+			<xsd:enumeration value="hour" />
+			<xsd:enumeration value="day" />
+			<xsd:enumeration value="month" />
+			<xsd:enumeration value="year" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- The definition of BasedOn follows. -->
+	<xsd:simpleType name="BasedOn">
+		<xsd:annotation>
+			<xsd:documentation>BasedOn indicates whether data was produced from an in vivo measurement or from a computer simulation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Experiment" />
+			<xsd:enumeration value="Simulation" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- The definition of UUID follows. -->
+	<xsd:simpleType name="UUIDType">
+		<xsd:annotation>
+			<xsd:documentation>UUIDType represents a universally unique identifier (http://tools.ietf.org/html/rfc4122).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- The definition of BDBase follows. -->
+	<xsd:complexType name="BDBase" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation>BDBase is the base type of all main elements in BDML.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="notes" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:any namespace="http://www.w3.org/1999/xhtml" processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="annotation" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="metaid" type="xsd:ID" use="optional" />
+	</xsd:complexType>
+	<!-- The deinifition of Info follows. -->
+	<xsd:complexType name="Info">
+		<xsd:annotation>
+			<xsd:documentation>Info describes the content of the BDML file.
+			Each BDML file has a unique identifier, which is used to identify the file in sharing and exchange.
+			License information such as the Creative Commons licenses (http://creativecommons.org/licenses/) should be explicitly indicated 
+			so that unnecessary conflict can be avoided.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="bdmlID" type="UUIDType" />
+					<xsd:element name="title" type="xsd:string" />
+					<xsd:element name="release" type="xsd:date" />
+					<xsd:element name="license" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of OntologyTerm follows. -->
+	<xsd:complexType name="OntologyTerm">
+		<xsd:annotation>
+			<xsd:documentation>OntologyTerm associates each term in BDML with that from external ontology sources.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="id" type="xsd:string" />
+					<xsd:element name="term" type="xsd:string" />
+					<xsd:element name="ontologyID" type="xsd:string" />
+					<xsd:element name="ontologyURI" type="xsd:anyURI" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Ontology follows. -->
+	<xsd:complexType name="Ontology">
+		<xsd:annotation>
+			<xsd:documentation>Ontology associates terms in BDML with those from external ontology sources.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="ontologyTerm" type="OntologyTerm" minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Contributors follows. -->
+	<xsd:complexType name="Contributors">
+		<xsd:annotation>
+			<xsd:documentation>A list of contributors should be described.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="person" minOccurs="1" maxOccurs="unbounded" type="Person" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>	
+	<!-- The definition of Summary follows. -->
+	<xsd:complexType name="Summary">
+		<xsd:annotation>
+			<xsd:documentation>Summary provides a concise description of the quantitative data in the BDML file.
+			A targeted organism should be provided based on the NCBI taxonomy definition (http://www.ncbi.nlm.nih.gov/taxonomy).
+			A localID can be used to link the bdmlID of the BDML file to an internal identifier name in each author or laboratory.
+			Detailed information of original published paper and/or database can be included.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="description" type="xsd:string" />
+					<xsd:element name="datatype">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="xsd:string">
+								<xsd:attribute name="ontologyRef" type="xsd:string" use="optional" />
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="organism" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="xsd:string">
+								<xsd:attribute name="ontologyRef" type="xsd:string" use="optional" />
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="localID" minOccurs="0" type="xsd:string" />
+					<xsd:element name="basedon" type="BasedOn" />
+					<xsd:element name="contributors" type="Contributors" />
+					<xsd:element name="citation" minOccurs="0" type="xsd:string" />
+					<xsd:element name="PMID" minOccurs="0" type="xsd:positiveInteger" />
+					<xsd:element name="dblink" minOccurs="0" type="xsd:anyURI" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Affiliation follows. -->
+	<xsd:complexType name="Affiliation">
+		<xsd:annotation>
+			<xsd:documentation>Affiliation describes the affiliation of a person in the BDML file.
+			E-mail address of the person should be listed, and physical address can be listed.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="E-mail" type="xsd:string" />
+					<xsd:element name="phone" minOccurs="0" type="xsd:string" />
+					<xsd:element name="URL" minOccurs="0" type="xsd:anyURI" />
+					<xsd:element name="organization" minOccurs="0" type="xsd:string" />
+					<xsd:element name="department" minOccurs="0" type="xsd:string" />
+					<xsd:element name="laboratory" minOccurs="0" type="xsd:string" />
+					<xsd:element name="address" minOccurs="0" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Person follows. -->
+	<xsd:complexType name="Person">
+		<xsd:annotation>
+			<xsd:documentation>Person describes detailed information of a person of the BDML file.
+			First and last name should be listed. ORCID and affiliation can be listed.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="first-name" type="xsd:string" />
+					<xsd:element name="last-name" type="xsd:string" />
+					<xsd:element name="middle-name" minOccurs="0" type="xsd:string" />
+					<xsd:element name="ORCID" minOccurs="0" type="xsd:string" />
+					<xsd:element name="affiliation" minOccurs="0" maxOccurs="unbounded" type="Affiliation" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Contact follows. -->
+	<xsd:complexType name="Contact">
+		<xsd:annotation>
+			<xsd:documentation>Contact describes the corresponding author(s) of the BDML file.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="person" minOccurs="1" maxOccurs="unbounded" type="Person" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Methods follows. -->
+	<xsd:complexType name="Methods">
+		<xsd:annotation>
+			<xsd:documentation>Methods describes procedures used for reproducing spatiotemporal numerical data in the BDML file.
+			Methods includes two hyperlinks which are defined as a Uniform Resource Identifier (URI).
+			The first link points to original sources such as microscope images of an in vivo measurement or 
+			files of the mathematical model of computer simulation.
+			The second link points to a description of procedures for obtaining the spatiotemporal numerical data from original sources.
+			It can be a file described in Procedures for Data Processing Markup Language (http://ssbd.qbic.riken.jp/pdpml/).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="summary" type="xsd:string" />
+					<xsd:element name="source" minOccurs="0" type="xsd:anyURI" />
+					<xsd:element name="protocol" minOccurs="0" type="xsd:anyURI" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of scaleUnit follows. -->
+	<xsd:complexType name="ScaleUnit">
+		<xsd:annotation>
+			<xsd:documentation>ScaleUnit indicates scale and unit of coordinates and time.
+			The scale factor of x, y, z dimensions, and time can be separately defined.
+			If data only have x and y dimensions, the scale factor of z dimension should be set to zero.
+			The unit of coordinates and time should be selected from the units predefined in tUnitKind.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="xScale" type="xsd:double" />
+					<xsd:element name="yScale" type="xsd:double" />
+					<xsd:element name="zScale" type="xsd:double" />
+					<xsd:element name="xyzUnit">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="UnitKind">
+								<xsd:attribute name="ontologyRef" type="xsd:string" use="optional" />
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="tScale" type="xsd:double" />
+					<xsd:element name="tUnit">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="tUnitKind">
+								<xsd:attribute name="ontologyRef" type="xsd:string" use="optional" />
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Object follows. -->
+	<xsd:complexType name="Object">
+		<xsd:annotation>
+			<xsd:documentation>Object specifies types of object that is detected from microscope images used in 
+			an in vivo measurement or from the result of a computer simulation.
+			The number of object is unlimited because the dynamics of more than one object can be obtained from
+			the in vivo measurement or from the simulation.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="objectName">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="xsd:string">
+								<xsd:attribute name="ontologyRef" type="xsd:string" use="optional" />
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Feature follows. -->
+	<xsd:complexType name="Feature">
+		<xsd:annotation>
+			<xsd:documentation>Feature specifies types of feature within the objects.
+			There can be more than one feature in an object. It allows us to represent numerical values of these features.
+			A scale factor and unit should be defined in featureScale and featureUnit, respectively.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="featureName" type="xsd:string" />
+					<xsd:element name="featureScale" type="xsd:double" />
+					<xsd:element name="featureUnit">
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="UnitKind">
+								<xsd:attribute name="ontologyRef" type="xsd:string" use="optional" />
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Property follows. -->
+	<xsd:complexType name="Property">
+		<xsd:annotation>
+			<xsd:documentation>Property describes the features of an object.
+			Each feature is referenced by the featureRef, which is defined in the Feature element.
+			Its numerical value can be recorded in the featureVal.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="featureRef" type="xsd:string" />
+					<xsd:element name="featureVal" type="xsd:double" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of XYZ follows. -->
+	<xsd:complexType name="XYZ">
+		<xsd:annotation>
+			<xsd:documentation>XYZ represents three-dimensional coordinates.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="x" type="xsd:double" />
+					<xsd:element name="y" type="xsd:double" />
+					<xsd:element name="z" type="xsd:double" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of XYZSequence follows. -->
+	<xsd:complexType name="XYZSequence">
+		<xsd:annotation>
+			<xsd:documentation>XYZSequence represents a sequence of coordinates written in counter-clockwise direction.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="xyz" minOccurs="1" maxOccurs="unbounded" type="XYZ" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of XYZTriplet follows. -->
+	<xsd:complexType name="XYZTriplet">
+		<xsd:annotation>
+			<xsd:documentation>XYZTriplet represents a set of three coordinates.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="xyz" minOccurs="3" maxOccurs="3" type="XYZ" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Point follows. -->
+	<xsd:complexType name="Point">
+		<xsd:annotation>
+			<xsd:documentation>Point is used when an object is described as a set of points.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="xyz" minOccurs="1" maxOccurs="unbounded" type="XYZ" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Line follows. -->
+	<xsd:complexType name="Line">
+		<xsd:annotation>
+			<xsd:documentation>Line is used when an object is described as a set of lines.
+			A continuous sequence points defined by a set of coordinates. If the line is closed, i.e. the starting point 
+			is the same as the end point, the sequence of points should be written in counter-clockwise direction.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="xyzSequence" minOccurs="1" maxOccurs="unbounded" type="XYZSequence" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Circle follows. -->
+	<xsd:complexType name="Circle">
+		<xsd:annotation>
+			<xsd:documentation>Circle is used when an object is described as a circle.
+			The scale of radius is mandatorily 1.0, and its unit is the same as the xyzUnit.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="xyz" type="XYZ" />
+					<xsd:element name="radius" type="xsd:double" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Sphere follows. -->
+	<xsd:complexType name="Sphere">
+		<xsd:annotation>
+			<xsd:documentation>Sphere is used when an object is described as a sphere.
+			The scale of radius is mandatorily 1.0, and its unit is the same as the xyzUnit.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="xyz" type="XYZ" />
+					<xsd:element name="radius" type="xsd:double" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Face follows. -->
+	<xsd:complexType name="Face">
+		<xsd:annotation>
+			<xsd:documentation>Face is used when an object is described as a set of faces.
+			A face is defined by three points. Orientation of a face determines which side of the face is facing inside or outside of an object.
+			To determine the orientation of a face, the coordinates of the face have to be written in counter-clockwise order.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="xyzTriplet" minOccurs="1" maxOccurs="unbounded" type="XYZTriplet" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Measurement follows. -->
+	<xsd:complexType name="Measurement">
+		<xsd:annotation>
+			<xsd:documentation>Measurement represents spatial information of objects.
+			Each measurement corresponds to coordinates of position for each object.
+			Property describes the features of an object.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="objectRef" type="xsd:string" />
+					<xsd:choice minOccurs="0">
+						<xsd:element name="point" type="Point" />
+						<xsd:element name="line" type="Line" />
+						<xsd:element name="circle" type="Circle" />
+						<xsd:element name="sphere" type="Sphere" />
+						<xsd:element name="face" type="Face" />
+					</xsd:choice>
+					<xsd:element name="property" minOccurs="0" maxOccurs="unbounded" type="Property" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Component follows. -->
+	<xsd:complexType name="Component">
+		<xsd:annotation>
+			<xsd:documentation>Component describes a collection of objects and their spatial information at a given point of time.
+			Each component must be separated by time (e.g. time frame); therefore it must contain the time element.
+			It also has a unique identifier, componentID.
+			A prevID can be used optionally to define a reference or connectivity with another component from a previous time.
+			Each component requires at least one measurement to describe spatial information of objects.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="componentID" type="xsd:string" />
+					<xsd:element name="componentName" minOccurs="0" type="xsd:string" />
+					<xsd:element name="time" type="xsd:double" />
+					<xsd:element name="prevID" minOccurs="0" maxOccurs="unbounded" type="xsd:string" />
+					<xsd:element name="measurement" minOccurs="1" maxOccurs="unbounded" type="Measurement" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Data follows. -->
+	<xsd:complexType name="Data">
+		<xsd:annotation>
+			<xsd:documentation>Data contains spatiotemporal numerical data of biological dynamics.
+			It has four sub-elements ScaleUnit, Object, Feature and Component.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="scaleUnit" type="ScaleUnit" />
+					<xsd:element name="object" minOccurs="1" maxOccurs="unbounded" type="Object" />
+					<xsd:element name="feature" minOccurs="0" maxOccurs="unbounded" type="Feature" />
+					<xsd:element name="component" minOccurs="1" maxOccurs="unbounded" type="Component" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Series follows. -->
+	<xsd:complexType name="Series">
+		<xsd:annotation>
+			<xsd:documentation>Series is used to separate data into a series of data files 
+			which are obtained from the same experiment or simulation.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="bdmlIDRef" minOccurs="1" maxOccurs="unbounded" type="UUIDType" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of Set follows. -->
+	<xsd:complexType name="Set">
+		<xsd:annotation>
+			<xsd:documentation>Set is used to represent a set of data files which are referenced in the same article.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="bdmlIDRef" minOccurs="1" maxOccurs="unbounded" type="UUIDType" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of extFile follows. -->
+	<xsd:complexType name="extFile">
+		<xsd:annotation>
+			<xsd:documentation>extFile is used to store quantitative data as an external file in BD5 format.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="bd5File" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- The definition of BDML structure follows. -->
+	<xsd:complexType name="bdmlDocument">
+		<xsd:annotation>
+			<xsd:documentation>bdmlDocument consists of 6 top-level elements (Info, Ontology, Summary, Contact, Methods, and Data).
+			There is the optional elements Series and Set, which can be used instead of the Data element.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="BDBase">
+				<xsd:sequence>
+					<xsd:element name="info" type="Info" />
+					<xsd:element name="ontology" type="Ontology" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="summary" type="Summary" />
+					<xsd:element name="contact" type="Contact" />
+					<xsd:element name="methods" type="Methods" />
+					<xsd:choice>
+						<xsd:element name="data" type="Data" />
+						<xsd:element name="series" type="Series" />
+						<xsd:element name="set" type="Set" />
+						<xsd:element name="extfile" type="extFile" />
+					</xsd:choice>
+				</xsd:sequence>
+				<xsd:attribute name="version" use="required" type="xsd:string" fixed="3.0" />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="bdml" type="bdmlDocument" />
+</xsd:schema>
