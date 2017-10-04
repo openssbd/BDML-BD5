@@ -16,7 +16,7 @@ Some software tools for data visualization and analysis are available at <http:/
 Some programs of Jupyter Notebook for BD5 format are also available as follows:
 
 1. <https://github.com/openssbd/BDML-BD5/blob/master/BD5_Displacement.ipynb>  
-2. <https://github.com/openssbd/BDML-BD5/blob/master/BD5_Proliferation_Curve.ipynb>
+2. <https://github.com/openssbd/BDML-BD5/blob/master/BD5_ProliferationCurve.ipynb>
 
 ## Reference
 Koji Kyoda, Yukako Tohsato, Kenneth H.L. Ho, Shuichi Onami (2015) Biological Dynamics Markup Language (BDML): an open format for representing quantitative biological dynamics data. *Bioinformatics* **31**, 1044-1052.
