@@ -22,6 +22,7 @@ BD5 specification:
 In *scaleUnit*, spatial and time scale and unit is defined. *dimension* should be described by "0D", "1D", "2D", "3D", "0D+T", "1D+T", "2D+T" or "3D+T". Followed by *dimension*, *xScale*, *yScale*, *zScale* and *sUnit* should be described. In the case of time series data, *tScale* and *tUnit* should be described.
 
 |dimension |xScale |yScale |zScale |sUnit      |tScale |tUnit  |
+|:---------|-------|-------|-------|-----------|-------|-------|
 |3D+T      |0.5    |0.5    |1.0    |micrometer |1.0    |second |
 
 Each numbered group has *object* and *feature* groups. Each *object* group has numbered dataset(s) corresponding to the reference number of the biological object predefined in the *objectDef* dataset. Each row of a numbered object includes the ID of the object and the spatiotemporal information of the object. In the current version of BD5, we prepared five entities, "point, "circle", "sphere", "line" and "face". In the case of "point" entity, each row of a numbered object includes time and xyz (or xy or x) coordinates. In the case of "circle" or "sphere" entity, each row includes time and xyz (or xy) coordinates. In the case of "line" or "face" entity, each row includes time, xyz (or xy) coordinates, and *seqID*. The *seqID* represents the ID of sequence of xyz coordinates. A set of regions or surfaces each of which is connected by xyz coordinates described beginning at the top represents the spatial information of the object.
