@@ -1,13 +1,19 @@
-# BDML/BD5
-an open format for representing quantitative data of biological dynamics
+# BDML-BD5 Overview
+BDML-BD5 is a set of open data formats for representing quantitative data of biological dynamics. While BDML is an XML based format, BD5 is based on HDF5 binary file format (ref: https://portal.hdfgroup.org/display/HDF5/HDF5).
 
 ## Motivation
-Rapid advances in live-cell imaging and modeling techniques enable many research groups to obtain a huge amount of quantitative biological dynamics data on spatiotemporal dynamics of biological objects such as molecules, cells, and organisms. However, their data cannot often be compared and analyzed by the same software tools because of different data formats. BDML (Biological Dynamics Markup Language) aims to facilitate data exchange and development of software tools for data visualization and analysis.
+Rapid advances in live-cell imaging and modeling techniques enable many research groups to obtain a huge amount of quantitative biological dynamics data on spatiotemporal dynamics of biological objects such as molecules, cells, and organisms. However, these data cannot often be compared and analyzed by the same software tools because of different data formats. BDML (Biological Dynamics Markup Language) aims to facilitate data exchange and development of software tools for data visualization and analysis. 
 
-## Overview of BDML/BD5
-BDML is an open format for representing quantitative biological dynamics data. It is based on Extensible Markup Language (XML). By using BDML, a wide variety of quantitative biological dynamics data from molecules to cells to organisms can be described. To describe a large size of quantitative biological dynamics data, we developed BD5, an HDF5-based data format to support BDML for storing quantitative biological dynamics data.
+Because BDML is an XML-based data format, large resources are required to read a whole BDML file sequentially into computer memory; this makes it difficult to access quantitative data when the file size is large. In contrast, BD5 enables fast random access to quantitative data on disk without parsing the entire file, and thereby allows practical reuse of data for understanding biological dynamics.
 
-BDML schema and specification: <http://ssbd.qbic.riken.jp/bdml/>  
+# BDML
+BDML is XML based file format for representing quantitative biological dynamics data. It can represent both meta and numerical information in a single file. 
+
+BDML schema and specification: <http://ssbd.qbic.riken.jp/bdml/>   
+
+# BD5
+BD5 is an HDF5-based binary data format. It was developed to support BDML for storing numerical quantitative biological dynamics data when the data set becomes too large. It allows fast random access to the data.
+
 BD5 specification:
 
  BD5 has one container named *data* group. It includes
@@ -58,4 +64,4 @@ Some programs of Jupyter Notebook for BD5 format are also available as follows:
 2. <https://github.com/openssbd/BDML-BD5/blob/master/BD5_ProliferationCurve.ipynb>
 
 ## Reference
-Koji Kyoda, Yukako Tohsato, Kenneth H.L. Ho, Shuichi Onami (2015) Biological Dynamics Markup Language (BDML): an open format for representing quantitative biological dynamics data. *Bioinformatics* **31**, 1044-1052.
+Koji Kyoda, Yukako Tohsato, Kenneth H.L. Ho, Shuichi Onami (2015) Biological Dynamics Markup Language (BDML): an open format for representing quantitative biological dynamics data. *Bioinformatics* **31**, 1044-1052. https://doi.org/10.1093/bioinformatics/btu767
