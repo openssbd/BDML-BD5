@@ -58,10 +58,10 @@ Each numbered group consists of two groups, *object* and *feature* groups.
 * Each *object* group has numbered dataset(s) corresponding to the reference number of the biological object predefined in the *objectDef* dataset. 
 * Each row of a numbered object includes the ID of the object and the spatiotemporal information of the object. 
 * In the current version of BD5, it allows five entities, "point, "circle", "sphere", "line" and "face". 
- * "point" entity - each row of a numbered object includes time and xyz (or xy or x) coordinates. 
- * "circle" or "sphere" entity - each row includes time and xyz (or xy) coordinates. 
- * "line" or "face" entity - each row includes time, xyz (or xy) coordinates, and *seqID*. 
-  * The *seqID* represents the ID of sequence of xyz coordinates. A set of regions or surfaces connected by xyz coordinates having the same *seqID*  represents the spatial information of the object.
+  * "point" entity - each row of a numbered object includes time and xyz (or xy or x) coordinates. 
+  * "circle" or "sphere" entity - each row includes time and xyz (or xy) coordinates. 
+  * "line" or "face" entity - each row includes time, xyz (or xy) coordinates, and *seqID*. 
+    * The *seqID* represents the ID of sequence of xyz coordinates. A set of regions or surfaces connected by xyz coordinates having the same *seqID*  represents the spatial information of the object.
 
 
 |ID    |t  |entity  |x    |y    |z    |radius   |
