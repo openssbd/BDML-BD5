@@ -83,4 +83,4 @@ Jupyter Notebook for accessing BD5 format are also available as follows:
 2. <https://github.com/openssbd/BDML-BD5/blob/master/BD5_ProliferationCurve.ipynb>
 
 ## Reference
-Koji Kyoda, Yukako Tohsato, Kenneth H.L. Ho, Shuichi Onami (2015) Biological Dynamics Markup Language (BDML): an open format for representing quantitative biological dynamics data. *Bioinformatics* **31**, 1044-1052. https://doi.org/10.1093/bioinformatics/btu767
+Koji Kyoda, Yukako Tohsato, Kenneth H.L. Ho, Shuichi Onami (2015) Biological Dynamics Markup Language (BDML): an open format for representing quantitative biological dynamics data. *Bioinformatics* **31**, 1044-1052. https://academic.oup.com/bioinformatics/article/31/7/1044/180750
