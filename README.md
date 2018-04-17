@@ -9,8 +9,13 @@ BDML is an open format for representing quantitative biological dynamics data. I
 
 BDML schema and specification: <http://ssbd.qbic.riken.jp/bdml/>  
 BD5 specification: will be available soon.
- BD5 has one container named **data** group. It includes
-  * scaleUnit
+ BD5 has one container named *data* group. It includes
+  * *scaleUnit* dataset for the definition of spatial and time scale and unit,
+  * *objectDef* dataset for the definition of biological objects,
+  * *featureDef* dataset for features of interest,
+  * numbered groups (0, 1, ..., n) corresponding to the number in time series,
+  * *trackInfo* dataset for the information of tracking of one object to another.
+
 
 ## Program codes
 Some software tools for data visualization and analysis are available at <http://ssbd.qbic.riken.jp/software/>.
