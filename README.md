@@ -1,5 +1,5 @@
 # BDML-BD5 Overview
-BDML-BD5 is a set of open data formats for representing quantitative data of biological dynamics. While BDML is an XML based format, BD5 is based on HDF5 binary file format (ref: https://portal.hdfgroup.org/display/HDF5/HDF5).
+BDML-BD5 is a set of open data formats for representing quantitative data of biological dynamics. While BDML is an XML based format, BD5 is based on HDF5 binary format (ref: https://portal.hdfgroup.org/display/HDF5/HDF5).
 
 ## Motivation
 Rapid advances in live-cell imaging and modeling techniques enable many research groups to obtain a huge amount of quantitative biological dynamics data on spatiotemporal dynamics of biological objects such as molecules, cells, and organisms. However, these data cannot often be compared and analyzed by the same software tools because of different data formats. BDML (Biological Dynamics Markup Language) aims to facilitate data exchange and development of software tools for data visualization and analysis. 
@@ -7,7 +7,7 @@ Rapid advances in live-cell imaging and modeling techniques enable many research
 Because BDML is an XML-based data format, large resources are required to read a whole BDML file sequentially into computer memory; this makes it difficult to access quantitative data when the file size is large. In contrast, BD5 enables fast random access to quantitative data on disk without parsing the entire file, and thereby allows practical reuse of data for understanding biological dynamics.
 
 # BDML
-BDML is XML based file format for representing quantitative biological dynamics data. It can represent both meta and numerical information in a single file. 
+BDML is XML based data format for representing quantitative biological dynamics data. It can represent both meta and numerical information in a single file. 
 
 BDML schema and specification: <http://ssbd.qbic.riken.jp/bdml/>   
 
@@ -54,13 +54,13 @@ In *featureDef* dataset, features of interest are defined.
 |:-----|---------------|---------|
 |0     |totalGFPsignal |a.u.     |
 
-* Each numbered group consists of two groups, *object* and *feature* groups. 
+Each numbered group consists of two groups, *object* and *feature* groups. 
 * Each *object* group has numbered dataset(s) corresponding to the reference number of the biological object predefined in the *objectDef* dataset. 
 * Each row of a numbered object includes the ID of the object and the spatiotemporal information of the object. 
 * In the current version of BD5, it allows five entities, "point, "circle", "sphere", "line" and "face". 
-* "point" entity - each row of a numbered object includes time and xyz (or xy or x) coordinates. 
-* "circle" or "sphere" entity - each row includes time and xyz (or xy) coordinates. 
-* "line" or "face" entity - each row includes time, xyz (or xy) coordinates, and *seqID*. 
+ * "point" entity - each row of a numbered object includes time and xyz (or xy or x) coordinates. 
+ * "circle" or "sphere" entity - each row includes time and xyz (or xy) coordinates. 
+ * "line" or "face" entity - each row includes time, xyz (or xy) coordinates, and *seqID*. 
   * The *seqID* represents the ID of sequence of xyz coordinates. A set of regions or surfaces connected by xyz coordinates having the same *seqID*  represents the spatial information of the object.
 
 
