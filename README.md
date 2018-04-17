@@ -37,11 +37,17 @@ In *featureDef* dataset, features of interest are defined.
 |:-----|---------------|---------|
 |0     |totalGFPsignal |a.u.     |
 
-Each numbered group has *object* and *feature* groups. Each *object* group has numbered dataset(s) corresponding to the reference number of the biological object predefined in the *objectDef* dataset. Each row of a numbered object includes the ID of the object and the spatiotemporal information of the object. In the current version of BD5, we prepared five entities, "point, "circle", "sphere", "line" and "face". In the case of "point" entity, each row of a numbered object includes time and xyz (or xy or x) coordinates. In the case of "circle" or "sphere" entity, each row includes time and xyz (or xy) coordinates. In the case of "line" or "face" entity, each row includes time, xyz (or xy) coordinates, and *seqID*. The *seqID* represents the ID of sequence of xyz coordinates. A set of regions or surfaces each of which is connected by xyz coordinates described beginning at the top represents the spatial information of the object.
+Each numbered group has *object* and *feature* groups. Each *object* group has numbered dataset(s) corresponding to the reference number of the biological object predefined in the *objectDef* dataset. Each row of a numbered object includes the ID of the object and the spatiotemporal information of the object. In the current version of BD5, we prepared five entities, "point, "circle", "sphere", "line" and "face". In the case of "point" entity, each row of a numbered object includes time and xyz (or xy or x) coordinates. In the case of "circle" or "sphere" entity, each row includes time and xyz (or xy) coordinates. In the case of "line" or "face" entity, each row includes time, xyz (or xy) coordinates, and *seqID*. The *seqID* represents the ID of sequence of xyz coordinates. A set of regions or surfaces connected by xyz coordinates having the same *seqID*  represents the spatial information of the object.
 
 |ID    |t  |entity  |x    |y    |z    |radius   |
 |:-----|---|--------|-----|-----|-----|---------|
-|001   |0  |sphere  |3.4  |4.5  |1.4  |3.6      |
+|i001  |0  |sphere  |3.4  |4.5  |1.4  |3.6      |
+
+In *trackInfo* dataset, the information of tracking of one object to another is described. Each row includes *from* and *to* corresponding to the IDs at the neighboring time.
+
+|from  |to   |
+|:-----|-----|
+|i001  |i002 |
 
 ## Program codes
 Some software tools for data visualization and analysis are available at <http://ssbd.qbic.riken.jp/software/>.
