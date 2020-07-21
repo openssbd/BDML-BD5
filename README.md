@@ -1,3 +1,25 @@
+## Latest information
+
+* Publication: 
+  * BD5: an open HDF5-based data format to represent quantitative biological dynamics data Koji Kyoda, Kenneth H. L. Ho, Yukako Tohsato, Hiroya Itoga, Shuichi Onami bioRxiv 2020.04.26.062976; doi: https://doi.org/10.1101/2020.04.26.062976
+
+* Manual (updated, July 2020):
+  * http://ssbd.qbic.riken.jp/bdml/bd5.html
+
+* BD5 samples (new, July 2020):
+  * https://github.com/openssbd/BD5_samples
+
+* BDML2BD5 - Converting BDML files to BD5
+  * https://github.com/openssbd/BDML2BD5
+
+* Docker container for BDML2BD5 (new, July 2020):
+  * https://github.com/openssbd/bdml2bd5-docker
+
+* BD5lint - a syntax checker for BD5 files
+  * https://github.com/openssbd/bd5lint
+
+
+
 # BDML-BD5 Overview
 BDML-BD5 is a set of open data formats for representing quantitative data of biological dynamics. While BDML is an XML based format, BD5 is based on HDF5 binary format (ref: https://portal.hdfgroup.org/display/HDF5/HDF5).
 
