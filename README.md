@@ -1,7 +1,7 @@
 ## Latest information
 
 * Publication: 
-  * BD5: an open HDF5-based data format to represent quantitative biological dynamics data Koji Kyoda, Kenneth H. L. Ho, Yukako Tohsato, Hiroya Itoga, Shuichi Onami bioRxiv 2020.04.26.062976; doi: https://doi.org/10.1101/2020.04.26.062976
+  * BD5: an open HDF5-based data format to represent quantitative biological dynamics data (2020) Koji Kyoda, Kenneth H. L. Ho, Yukako Tohsato, Hiroya Itoga, Shuichi Onami PLoS One 15, e0237468. doi: https://doi.org/10.1371/journal.pone.0237468
 
 * Manual (updated, July 2020):
   * http://ssbd.qbic.riken.jp/bdml/bd5.html
